@@ -1,77 +1,9 @@
+// ColorApp.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#pragma once
 #include <iostream>
-#include <assert.h>
-
-namespace TelCoColorCoder
-{
-    enum MajorColor {WHITE, RED, BLACK, YELLOW, VIOLET};
-    enum MinorColor {BLUE, ORANGE, GREEN, BROWN, SLATE};
-
-    const char* MajorColorNames[] = {
-        "White", "Red", "Black", "Yellow", "Violet"
-    };
-    int numberOfMajorColors =
-        sizeof(MajorColorNames) / sizeof(MajorColorNames[0]);
-    const char* MinorColorNames[] = {
-        "Blue", "Orange", "Green", "Brown", "Slate"
-    };
-    int numberOfMinorColors =
-        sizeof(MinorColorNames) / sizeof(MinorColorNames[0]);
-
-    class ColorPair {
-        private:
-            MajorColor majorColor;
-            MinorColor minorColor;
-        public:
-            ColorPair(MajorColor major, MinorColor minor):
-                majorColor(major), minorColor(minor)
-            {}
-            MajorColor getMajor() {
-                return majorColor;
-            }
-            MinorColor getMinor() {
-                return minorColor;
-            }
-            std::string ToString() {
-                std::string colorPairStr = MajorColorNames[majorColor];
-                colorPairStr += " ";
-                colorPairStr += MinorColorNames[minorColor];
-                return colorPairStr;
-            }
-    };
-
-    ColorPair GetColorFromPairNumber(int pairNumber) {
-        int zeroBasedPairNumber = pairNumber - 1;
-        MajorColor majorColor = 
-            (MajorColor)(zeroBasedPairNumber / numberOfMinorColors);
-        MinorColor minorColor =
-            (MinorColor)(zeroBasedPairNumber % numberOfMinorColors);
-        return ColorPair(majorColor, minorColor);
-    }
-    int GetPairNumberFromColor(MajorColor major, MinorColor minor) {
-        return major * numberOfMinorColors + minor + 1;
-    }
-}
-
-void testNumberToPair(int pairNumber,
-    TelCoColorCoder::MajorColor expectedMajor,
-    TelCoColorCoder::MinorColor expectedMinor)
-{
-    TelCoColorCoder::ColorPair colorPair =
-        TelCoColorCoder::GetColorFromPairNumber(pairNumber);
-    std::cout << "Got pair " << colorPair.ToString() << std::endl;
-    assert(colorPair.getMajor() == expectedMajor);
-    assert(colorPair.getMinor() == expectedMinor);
-}
-
-void testPairToNumber(
-    TelCoColorCoder::MajorColor major,
-    TelCoColorCoder::MinorColor minor,
-    int expectedPairNumber)
-{
-    int pairNumber = TelCoColorCoder::GetPairNumberFromColor(major, minor);
-    std::cout << "Got pair number " << pairNumber << std::endl;
-    assert(pairNumber == expectedPairNumber);
-}
+#include<assert.h>
+#include"TestUtil.h"
 
 int main() {
     testNumberToPair(4, TelCoColorCoder::WHITE, TelCoColorCoder::BROWN);
@@ -82,3 +14,15 @@ int main() {
 
     return 0;
 }
+
+
+// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
+// Debug program: F5 or Debug > Start Debugging menu
+
+// Tips for Getting Started: 
+//   1. Use the Solution Explorer window to add/manage files
+//   2. Use the Team Explorer window to connect to source control
+//   3. Use the Output window to see build output and other messages
+//   4. Use the Error List window to view errors
+//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
+//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
